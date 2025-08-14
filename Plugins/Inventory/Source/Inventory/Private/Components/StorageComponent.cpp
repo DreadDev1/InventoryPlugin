@@ -37,6 +37,17 @@ int UStorageComponent::GetFirstEmpty()
 	return -1;
 }
 
+int UStorageComponent::AddEmptyAtIndex(int Index)
+{
+	FInventoryItem e = FInventoryItem();
+	e.index = Index;
+	e.isEmpty = true;
+	e.ItemOwner = this;
+	Items.Insert(e, Index);
+	UpdateUI();
+	return Index;
+}
+
 void UStorageComponent::ServerAddBPItem(FInventoryItem Item)
 {
 	AddItem(Item);
@@ -98,6 +109,24 @@ bool UStorageComponent::AddItem(FInventoryItem Item)
 		Items.Insert(Item, newIndex);
 		SlotsFilled++;
 
+		UpdateUI();
+		return true;
+	}
+	return false;
+}
+
+void UStorageComponent::ServerRemoveBPItem(FInventoryItem Item)
+{
+	RemoveItem(Item);
+}
+
+bool UStorageComponent::RemoveItem(FInventoryItem Item)
+{
+	int Index = Item.index;
+	if (Item.index > -1) {
+		Items.RemoveAt(Index);
+		AddEmptyAtIndex(Index);
+		SlotsFilled--;
 		UpdateUI();
 		return true;
 	}

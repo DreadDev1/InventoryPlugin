@@ -47,8 +47,10 @@ public:
 	void UpdateUI();
 	
 	int GetFirstEmpty();
+	int AddEmptyAtIndex(int Index);
 	
 	bool AddItem(FInventoryItem Item);
+	bool RemoveItem(FInventoryItem Item);
 
 #pragma endregion Functions
 	
@@ -59,6 +61,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Inventory)
 	void ServerAddBPItem(FInventoryItem Item);
+
+	UFUNCTION(BlueprintCallable, Category = Inventory)
+	void ServerRemoveBPItem(FInventoryItem Item);
 #pragma endregion BPFunctions
 
 protected:
