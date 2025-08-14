@@ -23,8 +23,7 @@ struct FItemRow : public FTableRowBase
 {
 	GENERATED_USTRUCT_BODY()
 
-	public:
-
+public:
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
 		UStaticMesh* StaticMesh;
 
@@ -41,7 +40,7 @@ struct FItemRow : public FTableRowBase
 		FText ItemDescription;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		class UTexture2D* Thumbnail;
+		UTexture2D* Thumbnail;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
 		TEnumAsByte<eItemType> ItemType = eItemType::Unset;
@@ -68,39 +67,39 @@ struct FItemRow : public FTableRowBase
 		FString CostType;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool isConsumable = false;
+		bool bisConsumable = false;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool isStackable = false;
+		bool bisStackable = false;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool hasMaxStackSize = false;
+		bool bhasMaxStackSize = false;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool isRare = false;
+		bool bisRare = false;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool isBound = false;
+		bool bisBound = false;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool isEnabled = true;
+		bool bisEnabled = true;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool isAltEnabled = true;
+		bool bisAltEnabled = true;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool hasCooldown = false;
+		bool bhasCooldown = false;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
 		float cooldownTime = 5.0f;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool hasAltCooldown = false;
+		bool bhasAltCooldown = false;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
 		float altCooldownTime = 1.0f;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool isShopItem = false;
+		bool bisShopItem = false;
 };
 

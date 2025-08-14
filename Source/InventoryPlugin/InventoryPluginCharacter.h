@@ -11,6 +11,7 @@ class UInputComponent;
 class USkeletalMeshComponent;
 class UCameraComponent;
 class UInputAction;
+class UStorageComponent;
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
@@ -51,6 +52,9 @@ protected:
 	
 public:
 	AInventoryPluginCharacter();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
+	UStorageComponent* StorageComponent;
 
 protected:
 

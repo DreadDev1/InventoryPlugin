@@ -9,6 +9,7 @@
 #include "InputActionValue.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "InventoryPlugin.h"
+#include "Components/StorageComponent.h"
 
 AInventoryPluginCharacter::AInventoryPluginCharacter()
 {
@@ -42,6 +43,9 @@ AInventoryPluginCharacter::AInventoryPluginCharacter()
 	// Configure character movement
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
 	GetCharacterMovement()->AirControl = 0.5f;
+
+	StorageComponent = CreateDefaultSubobject<UStorageComponent>(TEXT("Storage Component"));
+	StorageComponent->Capacity = 20;
 }
 
 void AInventoryPluginCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
