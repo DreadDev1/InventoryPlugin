@@ -51,6 +51,7 @@ public:
 	
 	bool AddItem(FInventoryItem Item);
 	bool RemoveItem(FInventoryItem Item);
+	bool HasItems(FName UniqueName, int StackSize);
 
 #pragma endregion Functions
 	
@@ -64,6 +65,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Inventory)
 	void ServerRemoveBPItem(FInventoryItem Item);
+
+	UFUNCTION(BlueprintCallable, Category = Inventory)
+	bool BPHasItems(FName UniqueName, int StackSize);
 #pragma endregion BPFunctions
 
 protected:

@@ -133,5 +133,28 @@ bool UStorageComponent::RemoveItem(FInventoryItem Item)
 	return false;
 }
 
+bool UStorageComponent::HasItems(FName UniqueName, int StackSize)
+{
+	int PendingCount = StackSize;
+	
+	for (FInventoryItem& a : Items) {
+		if (a.UniqueName == UniqueName) {
+			PendingCount -= a.StackSize;
+
+			if (PendingCount <= 0) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool UStorageComponent::BPHasItems(FName UniqueName, int StackSize)
+{
+	return HasItems(UniqueName, StackSize);
+}
+
+
+
 
 
