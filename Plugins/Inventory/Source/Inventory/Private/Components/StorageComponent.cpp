@@ -5,6 +5,7 @@
 
 #include "Base/BaseItem.h"
 #include "Engine/DataTable.h"
+#include "Net/UnrealNetwork.h"
 
 
 UStorageComponent::UStorageComponent()
@@ -21,6 +22,19 @@ void UStorageComponent::BeginPlay()
 	Super::BeginPlay();
 }
 
+
+void UStorageComponent::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(UStorageComponent, Items);
+	DOREPLIFETIME(UStorageComponent, SlotsFilled);
+	DOREPLIFETIME(UStorageComponent, Capacity);
+}
+
+void UStorageComponent::OnRep_StorageUpdated()
+{
+	OnInventoryUpdated.Broadcast();
+}
 
 void UStorageComponent::UpdateUI()
 {
@@ -48,7 +62,7 @@ int UStorageComponent::AddEmptyAtIndex(int Index)
 	return Index;
 }
 
-void UStorageComponent::ServerAddBPItem(FInventoryItem Item)
+void UStorageComponent::ServerAddBPItem_Implementation(FInventoryItem Item)
 {
 	AddItem(Item);
 }
@@ -115,7 +129,7 @@ bool UStorageComponent::AddItem(FInventoryItem Item)
 	return false;
 }
 
-void UStorageComponent::ServerRemoveBPItem(FInventoryItem Item)
+void UStorageComponent::ServerRemoveBPItem_Implementation(FInventoryItem Item)
 {
 	RemoveItem(Item);
 }
@@ -159,7 +173,7 @@ bool UStorageComponent::RemoveItemStack(FName UniqueName, int StackSize)
 	return false;
 }
 
-void UStorageComponent::ServerRemoveBPItemStack(FName UniqueName, int StackSize)
+void UStorageComponent::ServerRemoveBPItemStack_Implementation(FName UniqueName, int StackSize)
 {
 	RemoveItemStack(UniqueName, StackSize);
 }

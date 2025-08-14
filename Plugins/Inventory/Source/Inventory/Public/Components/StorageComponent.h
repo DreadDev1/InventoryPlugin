@@ -22,13 +22,13 @@ public:
 
 	
 #pragma region Variables
-	UPROPERTY(EditDefaultsOnly, Category = Inventory)
+	UPROPERTY(EditDefaultsOnly, Replicated, Category = Inventory)
 	int Capacity;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Inventory)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Replicated, Category = Inventory)
 	int SlotsFilled;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing=OnRep_StorageUpdated, Category = Inventory)
 	TArray<FInventoryItem> Items;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
@@ -44,6 +44,10 @@ public:
 
 #pragma region Functions
 
+	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
+	UFUNCTION()
+	void OnRep_StorageUpdated();
+	
 	void UpdateUI();
 	
 	int GetFirstEmpty();
@@ -61,17 +65,19 @@ public:
 	UFUNCTION(BlueprintCallable, Category=Inventory)
 	TArray<FInventoryItem> GetItems() { return Items; }
 
-	UFUNCTION(BlueprintCallable, Category = Inventory)
+	UFUNCTION(BlueprintCallable, Server, Reliable, Category = Inventory)
 	void ServerAddBPItem(FInventoryItem Item);
 
-	UFUNCTION(BlueprintCallable, Category = Inventory)
+	UFUNCTION(BlueprintCallable, Server, Reliable, Category = Inventory)
 	void ServerRemoveBPItem(FInventoryItem Item);
 
+	UFUNCTION(BlueprintCallable, Server, Reliable, Category = Inventory)
+	void ServerRemoveBPItemStack(FName UniqueName, int StackSize);
+	
 	UFUNCTION(BlueprintCallable, Category = Inventory)
 	bool BPHasItems(FName UniqueName, int StackSize);
 
-	UFUNCTION(BlueprintCallable, Category = Inventory)
-	void ServerRemoveBPItemStack(FName UniqueName, int StackSize);
+	
 	
 #pragma endregion BPFunctions
 
