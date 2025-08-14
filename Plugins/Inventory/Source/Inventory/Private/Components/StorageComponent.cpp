@@ -133,6 +133,37 @@ bool UStorageComponent::RemoveItem(FInventoryItem Item)
 	return false;
 }
 
+bool UStorageComponent::RemoveItemStack(FName UniqueName, int StackSize)
+{
+	int PendingCount = StackSize;
+
+	for (FInventoryItem& a : Items) {
+		if (a.UniqueName == UniqueName) {
+			if (a.StackSize <= PendingCount) {
+				PendingCount -= a.StackSize;
+				RemoveItem(a);
+			}
+			else {
+				a.StackSize -= PendingCount;
+				PendingCount = 0;
+			}
+
+			if (PendingCount <= 0) {
+				UpdateUI();
+				return true;
+			}
+		}
+	}
+
+	UpdateUI();
+	return false;
+}
+
+void UStorageComponent::ServerRemoveBPItemStack(FName UniqueName, int StackSize)
+{
+	RemoveItemStack(UniqueName, StackSize);
+}
+
 bool UStorageComponent::HasItems(FName UniqueName, int StackSize)
 {
 	int PendingCount = StackSize;
