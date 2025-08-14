@@ -67,39 +67,39 @@ public:
 		FString CostType;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool bisConsumable = false;
+		bool bIsConsumable = false;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool bisStackable = false;
+		bool bIsStackable = false;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool bhasMaxStackSize = false;
+		bool bHasMaxStackSize = false;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool bisRare = false;
+		bool bIsRare = false;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool bisBound = false;
+		bool bIsBound = false;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool bisEnabled = true;
+		bool bIsEnabled = true;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool bisAltEnabled = true;
+		bool bIsAltEnabled = true;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool bhasCooldown = false;
+		bool bHasCooldown = false;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		float cooldownTime = 5.0f;
+		float CooldownTime = 5.0f;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool bhasAltCooldown = false;
+		bool bHasAltCooldown = false;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		float altCooldownTime = 1.0f;
+		float AltCooldownTime = 1.0f;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
-		bool bisShopItem = false;
+		bool bIsShopItem = false;
 };
 

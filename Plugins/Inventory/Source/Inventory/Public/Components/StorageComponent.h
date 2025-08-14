@@ -41,13 +41,25 @@ public:
 	FOnStorageCompFull OnInventoryFull;
 	
 #pragma endregion Variables
-	
-	
+
 #pragma region Functions
+
+	void UpdateUI();
+	
+	int GetFirstEmpty();
+	
+	bool AddItem(FInventoryItem Item);
+
+#pragma endregion Functions
+	
+#pragma region BPFunctions
 
 	UFUNCTION(BlueprintCallable, Category=Inventory)
 	TArray<FInventoryItem> GetItems() { return Items; }
 
+	UFUNCTION(BlueprintCallable, Category = Inventory)
+	void ServerAddBPItem(FInventoryItem Item);
+#pragma endregion BPFunctions
 
 protected:
 	// Called when the game starts

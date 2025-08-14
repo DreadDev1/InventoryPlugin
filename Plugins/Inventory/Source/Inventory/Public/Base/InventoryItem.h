@@ -24,6 +24,9 @@ struct FInventoryItem
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
 	bool isEmpty = false;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
+	class UStorageComponent* ItemOwner;
+
 	bool operator == (const FInventoryItem rhs) const { return (UniqueName == rhs.UniqueName); }
 };
 

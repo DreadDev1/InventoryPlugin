@@ -3,14 +3,15 @@
 
 #include "Components/StorageComponent.h"
 
+#include "Base/BaseItem.h"
+#include "Engine/DataTable.h"
+
 
 UStorageComponent::UStorageComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 }
-
-void UStorageComponent::TickComponent(float DeltaTime, ELevelTick TickType,
-	FActorComponentTickFunction* ThisTickFunction)
+void UStorageComponent::TickComponent(float DeltaTime, ELevelTick TickType,	FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
@@ -19,4 +20,89 @@ void UStorageComponent::BeginPlay()
 {
 	Super::BeginPlay();
 }
+
+
+void UStorageComponent::UpdateUI()
+{
+	OnInventoryUpdated.Broadcast();
+}
+
+int UStorageComponent::GetFirstEmpty()
+{
+	for (FInventoryItem a : Items) {
+		if (a.isEmpty) {
+			return a.index;
+		}
+	}
+	return -1;
+}
+
+void UStorageComponent::ServerAddBPItem(FInventoryItem Item)
+{
+	AddItem(Item);
+}
+
+bool UStorageComponent::AddItem(FInventoryItem Item)
+{
+	if (SlotsFilled >= Capacity) {
+		OnInventoryFull.Broadcast();
+		return false;
+	}
+
+	// process if the item is stackable
+	if (DataTable)
+	{
+		FItemRow* ItemRow = DataTable->FindRow<FItemRow>(Item.UniqueName, "");
+
+		int PendingStackSize = Item.StackSize;
+
+		if (ItemRow->bIsStackable) {
+			for (FInventoryItem& a : Items) {
+				if (a == Item) {
+					if (!ItemRow->bHasMaxStackSize) {
+						a.StackSize += PendingStackSize;
+						UpdateUI();
+						return true;
+					}
+					else {
+						if (a.StackSize < ItemRow->MaxStackSize) {
+							int OldStackSize = a.StackSize;
+
+							if ((OldStackSize + PendingStackSize) > ItemRow->MaxStackSize) {
+								int Diff = (OldStackSize + PendingStackSize) - ItemRow->MaxStackSize;
+								a.StackSize = ItemRow->MaxStackSize;
+								PendingStackSize = Diff;
+							}
+							else {
+								a.StackSize += PendingStackSize;
+								PendingStackSize = 0;
+							}
+						}
+					}
+				}
+
+				if (PendingStackSize == 0) {
+					UpdateUI();
+					return true;
+				}
+			}
+		}
+
+		int newIndex = GetFirstEmpty();
+		Items.RemoveAt(newIndex);
+
+		Item.index = newIndex;
+		Item.StackSize = PendingStackSize;
+		Item.ItemOwner = this;
+
+		Items.Insert(Item, newIndex);
+		SlotsFilled++;
+
+		UpdateUI();
+		return true;
+	}
+	return false;
+}
+
+
 
