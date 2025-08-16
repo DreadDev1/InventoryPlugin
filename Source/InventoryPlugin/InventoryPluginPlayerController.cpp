@@ -8,12 +8,26 @@
 #include "InventoryPluginCameraManager.h"
 #include "Blueprint/UserWidget.h"
 #include "InventoryPlugin.h"
+#include "Base/InventoryItem.h"
+#include "Components/StorageComponent.h"
 #include "Widgets/Input/SVirtualJoystick.h"
 
 AInventoryPluginPlayerController::AInventoryPluginPlayerController()
 {
 	// set the player camera manager class
 	PlayerCameraManagerClass = AInventoryPluginCameraManager::StaticClass();
+}
+
+void AInventoryPluginPlayerController::ServerAddBPItem_Implementation(UStorageComponent* Storage, FInventoryItem Item)
+{
+	// add the item to the storage
+	Storage->AddItem(Item);
+}
+
+void AInventoryPluginPlayerController::ServerRemoveBPItem_Implementation(UStorageComponent* Storage, FInventoryItem Item)
+{
+	// remove the item from the storage
+	Storage->RemoveItem(Item);
 }
 
 void AInventoryPluginPlayerController::BeginPlay()

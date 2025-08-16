@@ -47,7 +47,7 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
 	UFUNCTION()
 	void OnRep_StorageUpdated();
-	
+	 
 	void UpdateUI();
 	
 	int GetFirstEmpty();

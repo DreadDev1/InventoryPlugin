@@ -9,6 +9,8 @@
 
 class UInputMappingContext;
 class UUserWidget;
+class UStorageComponent;
+struct FInventoryItem;
 
 /**
  *  Simple first person Player Controller
@@ -24,6 +26,12 @@ public:
 
 	/** Constructor */
 	AInventoryPluginPlayerController();
+
+	UFUNCTION(BlueprintCallable, Server, Reliable, Category = Inventory)
+	void ServerAddBPItem(UStorageComponent* Storage, FInventoryItem Item);
+
+	UFUNCTION(BlueprintCallable, Server, Reliable, Category = Inventory)
+	void ServerRemoveBPItem(UStorageComponent* Storage,FInventoryItem Item);
 
 protected:
 

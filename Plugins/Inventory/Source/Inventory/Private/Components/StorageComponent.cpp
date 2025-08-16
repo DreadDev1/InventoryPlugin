@@ -28,16 +28,7 @@ void UStorageComponent::BeginPlay()
 		item.ItemOwner = this;
 		item.isEmpty = true;
 		Items.Add(item);
-	}
-
-
-
-
-
-
-
-
-	
+	}	
 }
 
 void UStorageComponent::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
@@ -68,8 +59,6 @@ void UStorageComponent::UpdateUI()
 {
 	OnInventoryUpdated.Broadcast();
 }
-
-
 
 int UStorageComponent::AddEmptyAtIndex(int Index)
 {
