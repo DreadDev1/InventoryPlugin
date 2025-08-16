@@ -7,11 +7,11 @@
 #include "Engine/DataTable.h"
 #include "Net/UnrealNetwork.h"
 
-
 UStorageComponent::UStorageComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 }
+
 void UStorageComponent::TickComponent(float DeltaTime, ELevelTick TickType,	FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
@@ -20,15 +20,35 @@ void UStorageComponent::TickComponent(float DeltaTime, ELevelTick TickType,	FAct
 void UStorageComponent::BeginPlay()
 {
 	Super::BeginPlay();
-}
 
+
+
+
+
+
+
+
+
+	
+}
 
 void UStorageComponent::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
 	DOREPLIFETIME(UStorageComponent, Items);
 	DOREPLIFETIME(UStorageComponent, SlotsFilled);
 	DOREPLIFETIME(UStorageComponent, Capacity);
+}
+
+int UStorageComponent::GetFirstEmpty()
+{
+	for (FInventoryItem a : Items) {
+		if (a.isEmpty) {
+			return a.index;
+		}
+	}
+	return -1;
 }
 
 void UStorageComponent::OnRep_StorageUpdated()
@@ -41,15 +61,7 @@ void UStorageComponent::UpdateUI()
 	OnInventoryUpdated.Broadcast();
 }
 
-int UStorageComponent::GetFirstEmpty()
-{
-	for (FInventoryItem a : Items) {
-		if (a.isEmpty) {
-			return a.index;
-		}
-	}
-	return -1;
-}
+
 
 int UStorageComponent::AddEmptyAtIndex(int Index)
 {
